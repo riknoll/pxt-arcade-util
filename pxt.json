@@ -7,11 +7,14 @@
     },
     "files": [
         "README.md",
-        "main.ts"
+        "main.ts",
+        "updater.ts",
+        "point.ts",
+        "direction.ts",
+        "trigger.ts"
     ],
     "testFiles": [
         "test.ts"
     ],
-    "public": false,
-    "additionalFilePaths": []
+    "public": false
 }
