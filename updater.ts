@@ -10,18 +10,30 @@ namespace util {
         }
 
         protected updaters: Updater[];
+        protected removeQueue: Updater[];
+        protected updateLock: boolean;
 
         private constructor() {
             this.updaters = [];
+            this.removeQueue = [];
 
             let lastTime = game.runtime();
             let time: number;
             let dt: number;
+            let i = 0;
             game.onUpdate(() => {
                 time = game.runtime();
                 dt = time - lastTime;
 
-                this.updaters.forEach(u => u.update(dt))
+                this.updateLock = true;
+                for (i = 0; i < this.updaters.length; i++) {
+                    this.updaters[i].update(dt);
+                }
+                this.updateLock = false;
+
+                while (this.removeQueue.length) {
+                    this.updaters.removeElement(this.removeQueue.pop());
+                }
 
                 lastTime = time;
             });
@@ -32,7 +44,12 @@ namespace util {
         }
 
         removeUpdater(updater: Updater) {
-            this.updaters.removeElement(updater);
+            if (this.updateLock) {
+                this.removeQueue.push(updater);
+            }
+            else {
+                this.updaters.removeElement(updater);
+            }
         }
     }
 

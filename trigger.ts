@@ -123,7 +123,8 @@ namespace util {
         }
 
         protected inAreaLastFrame(sprite: Sprite) {
-            return this.inArea((Fx.toInt(sprite._lastX) + (sprite.width >> 1)) >> 4, (Fx.toInt(sprite._lastY) + (sprite.height >> 1)) >> 4);
+            // console.log(`(${(Fx.toInt(sprite._lastX) + (sprite.width >> 1)) >> 4}, ${(Fx.toInt(sprite._lastY) + (sprite.height >> 1)) >> 4}) (${sprite.x >> 4}, ${sprite.y >> 4})`)
+            return this.inArea(sprite.data.lastX >> 4, sprite.data.lastY >> 4);
         }
 
         protected inAreaThisFrame(sprite: Sprite) {

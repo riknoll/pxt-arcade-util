@@ -114,6 +114,11 @@ namespace util {
         constructor(protected readonly func: TimingFunction, protected readonly target: Sprite) {
             super();
 
+            this.target.data = {
+                lastX: 0,
+                lasty: 0
+            }
+
             this.period = 1000;
             this.loop = false;
         }
@@ -151,6 +156,8 @@ namespace util {
                 if (this.onFunctionEnd) this.onFunctionEnd();
             }
             else {
+                this.target.data.lastX = this.target.x;
+                this.target.data.lastY = this.target.y;
                 this.func.moveTo(this.target, (this.period - this.timer) / this.period);
             }
         }
