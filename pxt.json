@@ -12,7 +12,8 @@
         "point.ts",
         "direction.ts",
         "trigger.ts",
-        "timingFunction.ts"
+        "timingFunction.ts",
+        "shape.ts"
     ],
     "testFiles": [
         "test.ts"
