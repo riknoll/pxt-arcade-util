@@ -1,6 +1,7 @@
 namespace util {
     export interface TimingFunction {
         moveTo(target: Sprite, t: number): void;
+        panTo(t: number): void;
     }
 
     export class CubicBezierCurve implements TimingFunction {
@@ -121,6 +122,39 @@ namespace util {
             const c = t * t;
 
             scene.centerCameraAt((a * this.p0x + b * this.p1x + c * this.p2x) | 0, (a * this.p0y + b * this.p1y + c * this.p2y) | 0)
+        }
+    }
+
+    export class LinearFunction implements TimingFunction {
+        protected p0x: number;
+        protected p0y: number;
+        protected p1x: number;
+        protected p1y: number;
+
+        setAnchor(p0: Point, p1: Point) {
+            this.p0x = p0.x;
+            this.p0y = p0.y;
+            this.p1x = p1.x;
+            this.p1y = p1.y;
+        }
+
+        setP0(x: number, y: number) {
+            this.p0x = x;
+            this.p0y = y
+        }
+
+        setP1(x: number, y: number) {
+            this.p1x = x;
+            this.p1y = y
+        }
+
+        moveTo(target: Sprite, t: number) { 
+            target.x = (this.p0x + (this.p1x - this.p0x) * t) | 0;
+            target.y = (this.p0y + (this.p1y - this.p0y) * t) | 0;
+        }
+
+        panTo(t: number) {
+            scene.centerCameraAt((this.p0x + (this.p1x - this.p0x) * t) | 0, (this.p0y + (this.p1y - this.p0y) * t) | 0);
         }
     }
 
