@@ -136,6 +136,10 @@ namespace util {
             return this.top + this.font.charHeight;
         }
 
+        setText(text: string) {
+            this.text = text;
+        }
+
         protected drawCore(offsetX: number, offsetY: number) {
             screen.print(this.text, this.left - offsetX, this.top - offsetY, this.color, this.font);
         }

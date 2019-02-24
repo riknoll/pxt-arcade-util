@@ -57,6 +57,16 @@ namespace util {
             target.x = (a * this.p0x + b * this.p1x + c * this.p2x + d * this.p3x) | 0;
             target.y = (a * this.p0y + b * this.p1y + c * this.p2y + d * this.p3y) | 0;
         }
+
+        panTo(t: number) {
+            const diff = 1 - t;
+            const a = diff * diff * diff;
+            const b = 3 * diff * diff * t;
+            const c = 3 * diff * t * t;
+            const d = t * t * t;
+
+            scene.centerCameraAt((a * this.p0x + b * this.p1x + c * this.p2x + d * this.p3x) | 0, (a * this.p0y + b * this.p1y + c * this.p2y + d * this.p3y) | 0);
+        }
     }
 
     export class QuadraticBezierCurve implements TimingFunction {
@@ -102,6 +112,15 @@ namespace util {
 
             target.x = (a * this.p0x + b * this.p1x + c * this.p2x) | 0;
             target.y = (a * this.p0y + b * this.p1y + c * this.p2y) | 0;
+        }
+
+        panTo(t: number) {
+            const diff = 1 - t;
+            const a = diff * diff;
+            const b = 2 * diff * t;
+            const c = t * t;
+
+            scene.centerCameraAt((a * this.p0x + b * this.p1x + c * this.p2x) | 0, (a * this.p0y + b * this.p1y + c * this.p2y) | 0)
         }
     }
 
