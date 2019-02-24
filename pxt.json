@@ -11,7 +11,8 @@
         "updater.ts",
         "point.ts",
         "direction.ts",
-        "trigger.ts"
+        "trigger.ts",
+        "timingFunction.ts"
     ],
     "testFiles": [
         "test.ts"
