@@ -158,19 +158,14 @@ namespace util {
         }
     }
 
-    export class TimingFunctionAnimation extends Updater {
+    export class TimingFunctionUpdater extends Updater {
         protected timer: number;
         protected period: number;
         protected loop: boolean;
         protected onFunctionEnd: () => void;
 
-        constructor(protected readonly func: TimingFunction, protected readonly target: Sprite) {
+        constructor() {
             super();
-
-            this.target.data = {
-                lastX: 0,
-                lasty: 0
-            }
 
             this.period = 1000;
             this.loop = false;
@@ -198,7 +193,7 @@ namespace util {
         update(dt: number) {
             this.timer -= dt;
             if (this.timer < 0) {
-                this.func.moveTo(this.target, 1);
+                this.apply(1);
                 if (this.loop) {
                     this.timer = this.period;
                 }
@@ -209,10 +204,39 @@ namespace util {
                 if (this.onFunctionEnd) this.onFunctionEnd();
             }
             else {
-                this.target.data.lastX = this.target.x;
-                this.target.data.lastY = this.target.y;
-                this.func.moveTo(this.target, (this.period - this.timer) / this.period);
+                this.apply((this.period - this.timer) / this.period);
             }
+        }
+
+        protected apply(t: number) {
+            // Subclass
+        }
+    }
+
+    export class TimingFunctionAnimation extends TimingFunctionUpdater {
+        constructor(protected readonly func: TimingFunction, protected readonly target: Sprite) {
+            super();
+
+            this.target.data = {
+                lastX: 0,
+                lasty: 0
+            }
+        }
+
+        protected apply(t: number) {
+            this.target.data.lastX = this.target.x;
+            this.target.data.lastY = this.target.y;
+            this.func.moveTo(this.target, t);
+        }
+    }
+
+    export class TimingFunctionPanner extends TimingFunctionUpdater {
+        constructor(protected readonly func: TimingFunction) {
+            super();
+        }
+
+        protected apply(t: number) {
+            this.func.panTo(t);
         }
     }
 }
