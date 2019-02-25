@@ -148,7 +148,7 @@ namespace util {
             this.p1y = y
         }
 
-        moveTo(target: Sprite, t: number) { 
+        moveTo(target: Sprite, t: number) {
             target.x = (this.p0x + (this.p1x - this.p0x) * t) | 0;
             target.y = (this.p0y + (this.p1y - this.p0y) * t) | 0;
         }
