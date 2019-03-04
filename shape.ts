@@ -1,33 +1,11 @@
 namespace util {
-    export class ShapeSprite implements SpriteLike {
-        z: number;
-        id: number;
+    export class ShapeSprite extends BaseSprite {
         protected color: number;
-        protected dead: boolean;
-        protected fixed: boolean;
-
-        get left() {
-            return 0;
-        }
-
-        get right() {
-            return 0;
-        }
-
-        get top() {
-            return 0;
-        }
-
-        get bottom() {
-            return 0;
-        }
 
         constructor() {
-            this.z = 0;
+            super();
+
             this.color = 1;
-            this.dead = false;
-            this.fixed = false;
-            game.currentScene().addSprite(this);
         }
 
         setColor(color: number) {
@@ -36,46 +14,6 @@ namespace util {
 
         getColor() {
             return this.color;
-        }
-
-        setFixed(fixed: boolean) {
-            this.fixed = fixed;
-        }
-
-        isFixed() {
-            return this.fixed;
-        }
-
-        __update(camera: scene.Camera, dt: number): void {
-        }
-
-        __draw(camera: scene.Camera): void {
-            if (this.fixed) {
-                this.drawCore(0, 0);
-            }
-            else if (this.isVisible(camera.offsetX, camera.offsetY, camera.offsetX + screen.width, camera.offsetY + screen.height)) {
-                this.drawCore(camera.offsetX, camera.offsetY);
-            }
-        }
-
-        __serialize(offset: number): Buffer {
-            // TODO
-            return null;
-        }
-
-        destroy() {
-            if (!this.dead) {
-                this.dead = true;
-                game.currentScene().allSprites.removeElement(this);
-            }
-        }
-
-        protected isVisible(screenLeft: number, screenTop: number, screenRight: number, screenBottom: number) {
-            return !((this.left > screenRight) || (this.right < screenLeft) || (this.top > screenBottom) || (this.bottom < screenTop));
-        }
-
-        protected drawCore(offsetX: number, offsetY: number) {
-
         }
     }
 
@@ -93,7 +31,7 @@ namespace util {
         }
 
         protected drawCore(offsetX: number, offsetY: number) {
-            screen.drawRect(this.left - offsetX, this.top - offsetY, this.width, this.height, this.color);
+            screen.fillRect(this.left - offsetX, this.top - offsetY, this.width, this.height, this.color);
         }
     }
 

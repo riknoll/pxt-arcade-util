@@ -13,10 +13,13 @@
         "direction.ts",
         "trigger.ts",
         "timingFunction.ts",
-        "shape.ts"
+        "shape.ts",
+        "tilemap.ts",
+        "baseSprite.ts"
     ],
     "testFiles": [
         "test.ts"
     ],
-    "public": false
+    "public": false,
+    "installedVersion": "workspace:bf70f1b7-db57-4e3e-d67d-0a57ae9c5097"
 }

@@ -1,7 +1,7 @@
 namespace util {
     export class Point {
-        readonly x: number;
-        readonly y: number;
+        x: number;
+        y: number;
 
         constructor(x: number, y: number) {
             this.x = x;

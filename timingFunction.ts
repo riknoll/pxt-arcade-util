@@ -123,6 +123,15 @@ namespace util {
 
             scene.centerCameraAt((a * this.p0x + b * this.p1x + c * this.p2x) | 0, (a * this.p0y + b * this.p1y + c * this.p2y) | 0)
         }
+
+        plot(canvas: Image, camera: scene.Camera, t: number, color: number) {
+            const diff = 1 - t;
+            const a = diff * diff;
+            const b = 2 * diff * t;
+            const c = t * t;
+
+            canvas.setPixel(((a * this.p0x + b * this.p1x + c * this.p2x) | 0) - camera.offsetX, ((a * this.p0y + b * this.p1y + c * this.p2y) | 0) - camera.offsetY, color)
+        }
     }
 
     export class LinearFunction implements TimingFunction {
