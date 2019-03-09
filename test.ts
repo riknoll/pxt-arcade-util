@@ -99,12 +99,12 @@ function triggerCurveTest() {
 
 
 function tilemapTest() {
-    const tm = new util.TileMap(new util.MapData(5, 5));
+    const tm = new util.TileMap(new util.MapData(15, 15));
     tm.data.allocate();
 
     for (let c = 0; c < tm.data.width; c++) {
         for (let r = 0; r < tm.data.height; r++) {
-            tm.data.setTile(c, r, ((c | r) & 1) ? 1 : 3);
+            tm.data.setTile(c, r, ((c | r) & 1) ? 1 : 2);
         }
     }
     tm.showGrid();
@@ -113,10 +113,17 @@ function tilemapTest() {
     scene.cameraFollowSprite(c)
     controller.moveSprite(c);
 
-    const region = tm.regions().newRegion(2, 2);
+    const region = tm.regions().newRegion(10, 10);
     region.setShader(new util.ColorTileShader(16, 7));
-    region.setTile(1, 0, true)
-    region.setTile(0, 1, true)
+    
+    
+
+    controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+        const sm = util.bfs(tm.data, c.x >> 4, c.y >> 4, 4, 1);
+        region.setOffset(sm.left, sm.top)
+        region.clear();
+        util.markSearchMap(sm, region)
+    })
 }
 
 tilemapTest();

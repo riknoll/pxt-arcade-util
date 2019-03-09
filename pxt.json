@@ -15,7 +15,8 @@
         "timingFunction.ts",
         "shape.ts",
         "tilemap.ts",
-        "baseSprite.ts"
+        "baseSprite.ts",
+        "tilemapFunctions.ts"
     ],
     "testFiles": [
         "test.ts"
