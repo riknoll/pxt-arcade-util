@@ -99,19 +99,24 @@ function triggerCurveTest() {
 
 
 function tilemapTest() {
-    const tm = new util.TileMap(new util.MapData(16, 16));
+    const tm = new util.TileMap(new util.MapData(5, 5));
     tm.data.allocate();
 
     for (let c = 0; c < tm.data.width; c++) {
         for (let r = 0; r < tm.data.height; r++) {
-            if ((c | r) & 1) tm.data.setTile(c, r, 1);
+            tm.data.setTile(c, r, ((c | r) & 1) ? 1 : 3);
         }
     }
-
+    tm.showGrid();
     tm.show();
     const c = sprites.create(img`3`);
     scene.cameraFollowSprite(c)
     controller.moveSprite(c);
+
+    const region = tm.regions().newRegion(2, 2);
+    region.setShader(new util.ColorTileShader(16, 7));
+    region.setTile(1, 0, true)
+    region.setTile(0, 1, true)
 }
 
 tilemapTest();
