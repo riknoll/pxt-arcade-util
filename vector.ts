@@ -54,6 +54,40 @@ namespace util.vector {
         return mag ? scaleVector(1 / mag, vector) : vector;
     }
 
+    export function rotate(origin: Point, point: Point, angle: number) {
+        const sin = Math.sin(angle);
+        const cos = Math.cos(angle);
+        return new Point(
+            origin.x + cos * (point.x - origin.x) - sin * (point.y - origin.y),
+            origin.y + sin * (point.x - origin.x) + cos * (point.y - origin.y)
+        );
+    }
+
+    export function drawPolygon(points: Point[], center: Point, color: number, camera: scene.Camera) {
+        const ox = center.x - camera.offsetX;
+        const oy = center.y - camera.offsetY;
+
+        let prev = points[0];
+        let current: Point;
+
+        for (let i = 1; i < points.length; i++) {
+            current = points[i];
+            screen.drawLine(
+                prev.x + ox,
+                prev.y + oy,
+                current.x + ox,
+                current.y + oy,
+                color);
+            prev = current;
+        }
+        screen.drawLine(
+            prev.x + ox,
+            prev.y + oy,
+            points[0].x + ox,
+            points[0].y + oy,
+            color);
+    }
+
     export class LineSegment {
         protected xDiff: number;
         protected yDiff: number;
@@ -116,10 +150,27 @@ namespace util.vector {
         }
     }
 
+    export class PolygonSource {
+        public center: Point;
+
+        constructor(public points: Point[]) {
+            this.center = averageVectors(points);
+        }
+
+        rotate(angle: number, anchor?: Point) {
+            anchor = anchor || this.center;
+            return new PolygonSource(this.points.map(p => rotate(anchor, p, angle)));
+        }
+
+        scale(scalar: number) {
+            return new PolygonSource(this.points.map(p => scaleVector(scalar, p)));
+        }
+    }
+
     export class Polygon {
         public sides: LineSegment[]
 
-        constructor(points: Point[]) {
+        constructor(protected points: Point[]) {
             this.sides = [new LineSegment(points[points.length - 1], points[0])];
             for (let i = 0; i < points.length - 1; i++) {
                 this.sides.push(new LineSegment(points[i], points[i + 1]))

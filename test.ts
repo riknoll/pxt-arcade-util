@@ -132,4 +132,26 @@ function tilemapTest() {
     })
 }
 
-tilemapTest();
+function vectorTest() {
+    const ship = new util.vector.PolygonSource([
+        new util.Point(0, 3),
+        new util.Point(3, 0),
+        new util.Point(3, -2),
+        new util.Point(2, -3),
+        new util.Point(0, -2),
+        new util.Point(-2, -3),
+        new util.Point(-3, -2),
+        new util.Point(-3, 0),
+    ]).scale(2);
+
+    const anchor = new util.Point(screen.width >> 1, screen.height >> 1);
+
+    let i = 0;
+
+    game.onPaint(function () {
+        i = (i + 1) % 360;
+        util.vector.drawPolygon(ship.rotate(Math.PI * i / 180).points, anchor, 1, game.currentScene().camera)
+    })
+}
+
+vectorTest();
