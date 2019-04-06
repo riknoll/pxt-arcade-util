@@ -16,11 +16,15 @@
         "shape.ts",
         "tilemap.ts",
         "baseSprite.ts",
-        "tilemapFunctions.ts"
+        "tilemapFunctions.ts",
+        "cursor.ts",
+        "controllerUtil.ts",
+        "vector.ts"
     ],
     "testFiles": [
         "test.ts"
     ],
     "public": false,
-    "installedVersion": "workspace:bf70f1b7-db57-4e3e-d67d-0a57ae9c5097"
+    "installedVersion": "workspace:bf70f1b7-db57-4e3e-d67d-0a57ae9c5097",
+    "preferredEditor": "tsprj"
 }

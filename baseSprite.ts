@@ -25,7 +25,7 @@ namespace util {
             this.z = 0;
             this.fixed = false;
         }
-        
+
         setFixed(fixed: boolean) {
             this.fixed = fixed;
         }
@@ -71,9 +71,9 @@ namespace util {
     }
 
     export class AnchoredSprite extends BaseSprite {
-        readonly anchor: Point;
+        public anchor: Anchor;
 
-        constructor(public readonly width: number, public readonly height: number) {
+        constructor(public width: number, public height: number) {
             super();
             this.anchor = new Point(0, 0);
         }
@@ -113,6 +113,15 @@ namespace util {
         centerOn(x: number, y: number) {
             this.left = x - (this.width >> 1)
             this.top = y - (this.height >> 1)
+        }
+
+        __draw(camera: scene.Camera): void {
+            if (this.fixed) {
+                this.drawCore(this.anchor.x, this.anchor.y);
+            }
+            else if (this.isVisible(camera.offsetX, camera.offsetY, camera.offsetX + screen.width, camera.offsetY + screen.height)) {
+                this.drawCore(this.anchor.x - camera.drawOffsetX, this.anchor.y - camera.drawOffsetY);
+            }
         }
     }
 }

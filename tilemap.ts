@@ -1,13 +1,21 @@
 namespace util {
-    export class TileMap extends AnchoredSprite {
+    export class TileMap extends BaseSprite {
         protected GridTileShader: TileShader;
         protected gridVisible: boolean;
         protected regionData: RegionData;
 
         constructor(public readonly data: MapData, public readonly tileWidth = 16) {
-            super(data.width * tileWidth, data.height * tileWidth);
+            super();
             this.GridTileShader = new GridTileShader(tileWidth);
             this.gridVisible = false;
+        }
+
+        get right() {
+            return this.tileWidth * this.data.width;
+        }
+
+        get bottom() {
+            return this.tileWidth * this.data.height;
         }
 
         protected drawCore(offsetX: number, offsetY: number) {

@@ -1,5 +1,10 @@
 namespace util {
-    export class Point {
+    export interface Anchor {
+        x: number;
+        y: number;
+    }
+
+    export class Point implements Anchor {
         x: number;
         y: number;
 

@@ -104,10 +104,10 @@ function tilemapTest() {
 
     for (let c = 0; c < tm.data.width; c++) {
         for (let r = 0; r < tm.data.height; r++) {
-            tm.data.setTile(c, r, ((c | r) & 1) ? 1 : 2);
+            tm.data.setTile(c, r, Math.percentChance(80) ? 1 : 2);
         }
     }
-    tm.showGrid();
+    // tm.showGrid();
     tm.show();
     const c = sprites.create(img`3`);
     scene.cameraFollowSprite(c)
@@ -115,8 +115,14 @@ function tilemapTest() {
 
     const region = tm.regions().newRegion(10, 10);
     region.setShader(new util.ColorTileShader(16, 7));
-    
-    
+
+    const u = new util.CursorSprite(16);
+    u.moveTo(5, 5);
+    u.show();
+
+    const a = new util.AnchoredSprite(20, 20);
+
+
 
     controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         const sm = util.bfs(tm.data, c.x >> 4, c.y >> 4, 4, 1);
