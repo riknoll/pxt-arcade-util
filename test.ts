@@ -154,4 +154,41 @@ function vectorTest() {
     })
 }
 
-vectorTest();
+
+function slopesTest() {
+    scene.setBackgroundColor(13)
+    util.enableSlopePhysics(img`
+        1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+        1 . . . . . . . . . . . . . . . . . . 1
+        1 . . . . . . . . . . . . . . . . . . 1
+        1 . . . . . . . . . . . . . . . . . . 1
+        1 . . . . . . . . . . . . . . . . . . 1
+        1 . . . . . . . . . . . . . . . . . . 1
+        1 . . . . . . . . . . . . . . . . . . 1
+        1 . . . . . . . . . . . . . . . . . . 1
+        1 . . . . . . . . . . . . . . . . . . 1
+        1 . . . . . . . . . . . . . . . . . . 1
+        1 . . . . . . . . . . . . . . . . . . 1
+        1 . . . . . . . . . . . . . . . 1 . . 1
+        1 . . . 5 1 4 . . . . . . . . . 1 1 . 1
+        1 7 2 9 1 1 1 8 2 2 2 6 . . . 1 1 1 . 1
+        1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1
+    `);
+
+    const player = sprites.create(img`
+        3 3 3
+        3 3 3
+        3 3 3
+        3 3 3
+        3 3 3
+    `, SpriteKind.Player);
+
+    player.ay = 150;
+    controller.moveSprite(player, 70, 0); 
+
+    controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+        player.vy = -100;
+    })
+}
+
+slopesTest();

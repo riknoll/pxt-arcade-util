@@ -19,7 +19,8 @@
         "tilemapFunctions.ts",
         "cursor.ts",
         "controllerUtil.ts",
-        "vector.ts"
+        "vector.ts",
+        "slopeMap.ts"
     ],
     "testFiles": [
         "test.ts"
